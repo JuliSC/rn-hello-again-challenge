@@ -1,3 +1,4 @@
+import { BorderRadius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    padding: 10,
-    borderRadius: 5,
+    padding: Spacing.four,
+    borderRadius: BorderRadius.medium,
   },
   buttonText: {
     color: 'white',
