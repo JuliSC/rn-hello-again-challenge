@@ -12,7 +12,7 @@ export default function LoginView() {
 
   const handleLogin = useCallback(async () => {
     try {
-      await login({ email: 'testUser@dev.null', password: 'challenge-2026;' });
+      await login({ email: 'testUser@dev.null', password: 'challenge-2026' });
       router.replace('/home');
     } catch (err) {
       console.log('Login error:', err);
