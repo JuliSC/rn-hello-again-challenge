@@ -1,35 +1,5 @@
-import { useTheme } from '@/hooks/use-theme';
-import { useRouter } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import LoginView from '@/features/auth/views/login-view';
 
 export default function Login() {
-  const router = useRouter();
-  const theme = useTheme();
-
-  return (
-    <View style={styles.container}>
-      <Pressable
-        style={[styles.button, { backgroundColor: theme.primary }]}
-        onPress={() => router.replace('/home')}
-      >
-        <Text style={styles.buttonText}>Login</Text>
-      </Pressable>
-    </View>
-  );
+  return <LoginView />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-});
