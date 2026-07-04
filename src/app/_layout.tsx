@@ -1,5 +1,14 @@
-import { Stack } from 'expo-router';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 
 export default function RootLayout() {
-  return <Stack />;
+  const colorScheme = useColorScheme();
+  return (
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="index" options={{ title: 'Login' }} />
+        <Stack.Screen name="home" options={{ title: 'Home' }} />
+      </Stack>
+    </ThemeProvider>
+  );
 }
