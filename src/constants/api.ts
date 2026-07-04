@@ -1,4 +1,4 @@
 export const API_CONFIG = {
-  BASE_URL: 'https://api.demo.helloagain.at',
-  CLIENT_ID: 'CLIENT_ID',
+  BASE_URL: process.env.EXPO_PUBLIC_API_URL,
+  CLIENT_ID: process.env.EXPO_PUBLIC_API_CLIENT_ID,
 } as const;
