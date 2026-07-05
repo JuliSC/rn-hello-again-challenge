@@ -1,4 +1,5 @@
 import { BorderRadius, Spacing } from '@/constants/theme';
+import { useRedeemBounty } from '@/features/bounties/hooks/mutations/useRedeemBounties';
 import { useBounties } from '@/features/bounties/hooks/queries/useBounties';
 import { useCustomerRelationships } from '@/features/customer-relationships/hooks/queries/useCustomerRelationships';
 import { useProfile } from '@/features/profile/hooks/queries/useProfile';
@@ -28,9 +29,16 @@ export default function Home() {
     error: bountiesError,
   } = useBounties();
 
+  const { mutate: redeemBounty } = useRedeemBounty();
+
   const handleNavigateToQrScanner = useCallback(() => {
     router.push('/coupon-qr-scanner');
   }, [router]);
+
+  const handleRedeemBounty = useCallback(
+    (bountyId: string) => redeemBounty({ bounty_id: bountyId }),
+    [redeemBounty],
+  );
 
   if (customerRelationshipsLoading || profileLoading || bountiesLoading) {
     return (
@@ -83,7 +91,7 @@ export default function Home() {
             <Text>CR Points: {bounty.cr_points}</Text>
             <Pressable
               style={[styles.button, { backgroundColor: theme.primary }]}
-              onPress={() => {}}
+              onPress={() => handleRedeemBounty(bounty.id)}
             >
               <Text style={styles.buttonText}>Redeem</Text>
             </Pressable>
