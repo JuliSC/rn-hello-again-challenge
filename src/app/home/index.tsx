@@ -1,9 +1,15 @@
+import { BorderRadius, Spacing } from '@/constants/theme';
 import { useBounties } from '@/features/bounties/hooks/queries/useBounties';
 import { useCustomerRelationships } from '@/features/customer-relationships/hooks/queries/useCustomerRelationships';
 import { useProfile } from '@/features/profile/hooks/queries/useProfile';
-import { Text, View } from 'react-native';
+import { useTheme } from '@/hooks/use-theme';
+import { useRouter } from 'expo-router';
+import { useCallback } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 export default function Home() {
+  const router = useRouter();
+  const theme = useTheme();
   const {
     data: customerRelationshipsData,
     isLoading: customerRelationshipsLoading,
@@ -21,6 +27,10 @@ export default function Home() {
     isLoading: bountiesLoading,
     error: bountiesError,
   } = useBounties();
+
+  const handleNavigateToQrScanner = useCallback(() => {
+    router.push('/coupon-qr-scanner');
+  }, [router]);
 
   if (customerRelationshipsLoading || profileLoading || bountiesLoading) {
     return (
@@ -69,6 +79,28 @@ export default function Home() {
           <Text>CR Points: {bounty.cr_points}</Text>
         </View>
       ))}
+      <Pressable
+        style={[styles.button, { backgroundColor: theme.primary }]}
+        onPress={handleNavigateToQrScanner}
+      >
+        <Text style={styles.buttonText}>Scan QR Code</Text>
+      </Pressable>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    padding: Spacing.four,
+    borderRadius: BorderRadius.medium,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});

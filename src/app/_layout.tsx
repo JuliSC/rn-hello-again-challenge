@@ -12,6 +12,10 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="index" options={{ title: 'Login' }} />
           <Stack.Screen name="home" options={{ title: 'Home' }} />
+          <Stack.Screen
+            name="coupon-qr-scanner"
+            options={{ title: 'Scan QR Code' }}
+          />
         </Stack>
       </QueryClientProvider>
     </ThemeProvider>
