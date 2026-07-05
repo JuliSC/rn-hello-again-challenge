@@ -1,10 +1,21 @@
 import { useCustomerRelationships } from '@/features/customer-relationships/hooks/queries/useCustomerRelationships';
+import { useProfile } from '@/features/profile/hooks/queries/useProfile';
 import { Text, View } from 'react-native';
 
 export default function Home() {
-  const { data, isLoading, error } = useCustomerRelationships();
+  const {
+    data: customerRelationshipsData,
+    isLoading: customerRelationshipsLoading,
+    error: customerRelationshipsError,
+  } = useCustomerRelationships();
 
-  if (isLoading) {
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+    error: profileError,
+  } = useProfile();
+
+  if (customerRelationshipsLoading || profileLoading) {
     return (
       <View>
         <Text>Loading...</Text>
@@ -12,11 +23,17 @@ export default function Home() {
     );
   }
 
-  if (error) {
+  if (customerRelationshipsError || profileError) {
     return (
       <View>
         <Text>
-          Error: {error instanceof Error ? error.message : 'Unknown error'}
+          Errors:{' '}
+          {customerRelationshipsError instanceof Error
+            ? customerRelationshipsError.message
+            : 'Unknown error'}
+          {profileError instanceof Error
+            ? profileError.message
+            : 'Unknown error'}
         </Text>
       </View>
     );
@@ -24,7 +41,13 @@ export default function Home() {
 
   return (
     <View>
-      <Text>Points: {data?.points}</Text>
+      <Text>Points: {customerRelationshipsData?.points}</Text>
+      <Text>Email: {profileData?.email}</Text>
+      <Text>Name: {profileData?.name}</Text>
+      <Text>First Name: {profileData?.first_name}</Text>
+      <Text>Last Name: {profileData?.last_name}</Text>
+      <Text>Locale: {profileData?.locale}</Text>
+      <Text>Customer ID: {profileData?.customer_id}</Text>
     </View>
   );
 }
