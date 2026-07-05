@@ -70,7 +70,10 @@ export default function Home() {
       <Text>Customer ID: {profileData?.customer_id}</Text>
       <Text>Bounties:</Text>
       {bountiesData?.map((bounty) => (
-        <View key={bounty.id}>
+        <View
+          style={[styles.bountyContainer, { borderColor: theme.border }]}
+          key={bounty.id}
+        >
           <Text>ID: {bounty.id}</Text>
           <Text>Name: {bounty.name}</Text>
           <Text>Description: {bounty.description}</Text>
@@ -102,5 +105,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  bountyContainer: {
+    marginBottom: Spacing.four,
+    padding: Spacing.four,
+    borderWidth: 1,
+    borderRadius: BorderRadius.medium,
   },
 });
