@@ -5,10 +5,20 @@ import { useCustomerRelationships } from '@/features/customer-relationships/hook
 import { useProfile } from '@/features/profile/hooks/queries/useProfile';
 import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
-import { useCallback } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useState } from 'react';
+import {
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 export default function Home() {
+  const [bountyRedeemedMessage, setBountyRedeemedMessage] = useState<
+    string | null
+  >(null);
   const router = useRouter();
   const theme = useTheme();
   const {
@@ -27,9 +37,17 @@ export default function Home() {
     data: bountiesData,
     isLoading: bountiesLoading,
     error: bountiesError,
+    refetch: refetchBounties,
   } = useBounties();
 
-  const { mutate: redeemBounty } = useRedeemBounty();
+  const { mutate: redeemBounty } = useRedeemBounty({
+    onSuccess: () => {
+      setBountyRedeemedMessage('Bounty redeemed successfully!');
+      setTimeout(() => {
+        setBountyRedeemedMessage(null);
+      }, 2000);
+    },
+  });
 
   const handleNavigateToQrScanner = useCallback(() => {
     router.push('/coupon-qr-scanner');
@@ -69,7 +87,21 @@ export default function Home() {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={refetchBounties} />
+        }
+      >
+        {bountyRedeemedMessage !== null ? (
+          <View
+            style={[
+              styles.bountyRedeemedContainer,
+              { backgroundColor: theme.reward },
+            ]}
+          >
+            <Text style={{ color: 'white' }}>{bountyRedeemedMessage}</Text>
+          </View>
+        ) : null}
         <Text>Points: {customerRelationshipsData?.points}</Text>
         <Text>Email: {profileData?.email}</Text>
         <Text>Name: {profileData?.name}</Text>
@@ -127,5 +159,13 @@ const styles = StyleSheet.create({
     padding: Spacing.four,
     borderWidth: 1,
     borderRadius: BorderRadius.medium,
+  },
+  bountyRedeemedContainer: {
+    position: 'absolute',
+    top: 0,
+    zIndex: 99,
+    borderRadius: BorderRadius.medium,
+    padding: Spacing.four,
+    alignSelf: 'center',
   },
 });
