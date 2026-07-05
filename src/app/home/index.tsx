@@ -80,6 +80,12 @@ export default function Home() {
           <Text>Is Redeemable: {bounty.is_redeemable ? 'Yes' : 'No'}</Text>
           <Text>Needed Points: {bounty.needed_points}</Text>
           <Text>CR Points: {bounty.cr_points}</Text>
+          <Pressable
+            style={[styles.button, { backgroundColor: theme.primary }]}
+            onPress={() => {}}
+          >
+            <Text style={styles.buttonText}>Redeem</Text>
+          </Pressable>
         </View>
       ))}
       <Pressable
