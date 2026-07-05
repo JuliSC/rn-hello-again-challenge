@@ -5,7 +5,7 @@ import { useProfile } from '@/features/profile/hooks/queries/useProfile';
 import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { useCallback } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function Home() {
   const router = useRouter();
@@ -60,40 +60,42 @@ export default function Home() {
   }
 
   return (
-    <View>
-      <Text>Points: {customerRelationshipsData?.points}</Text>
-      <Text>Email: {profileData?.email}</Text>
-      <Text>Name: {profileData?.name}</Text>
-      <Text>First Name: {profileData?.first_name}</Text>
-      <Text>Last Name: {profileData?.last_name}</Text>
-      <Text>Locale: {profileData?.locale}</Text>
-      <Text>Customer ID: {profileData?.customer_id}</Text>
-      <Text>Bounties:</Text>
-      {bountiesData?.map((bounty) => (
-        <View
-          style={[styles.bountyContainer, { borderColor: theme.border }]}
-          key={bounty.id}
-        >
-          <Text>ID: {bounty.id}</Text>
-          <Text>Name: {bounty.name}</Text>
-          <Text>Description: {bounty.description}</Text>
-          <Text>Is Redeemable: {bounty.is_redeemable ? 'Yes' : 'No'}</Text>
-          <Text>Needed Points: {bounty.needed_points}</Text>
-          <Text>CR Points: {bounty.cr_points}</Text>
-          <Pressable
-            style={[styles.button, { backgroundColor: theme.primary }]}
-            onPress={() => {}}
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <Text>Points: {customerRelationshipsData?.points}</Text>
+        <Text>Email: {profileData?.email}</Text>
+        <Text>Name: {profileData?.name}</Text>
+        <Text>First Name: {profileData?.first_name}</Text>
+        <Text>Last Name: {profileData?.last_name}</Text>
+        <Text>Locale: {profileData?.locale}</Text>
+        <Text>Customer ID: {profileData?.customer_id}</Text>
+        <Text>Bounties:</Text>
+        {bountiesData?.map((bounty) => (
+          <View
+            style={[styles.bountyContainer, { borderColor: theme.border }]}
+            key={bounty.id}
           >
-            <Text style={styles.buttonText}>Redeem</Text>
-          </Pressable>
-        </View>
-      ))}
-      <Pressable
-        style={[styles.button, { backgroundColor: theme.primary }]}
-        onPress={handleNavigateToQrScanner}
-      >
-        <Text style={styles.buttonText}>Scan QR Code</Text>
-      </Pressable>
+            <Text>ID: {bounty.id}</Text>
+            <Text>Name: {bounty.name}</Text>
+            <Text>Description: {bounty.description}</Text>
+            <Text>Is Redeemable: {bounty.is_redeemable ? 'Yes' : 'No'}</Text>
+            <Text>Needed Points: {bounty.needed_points}</Text>
+            <Text>CR Points: {bounty.cr_points}</Text>
+            <Pressable
+              style={[styles.button, { backgroundColor: theme.primary }]}
+              onPress={() => {}}
+            >
+              <Text style={styles.buttonText}>Redeem</Text>
+            </Pressable>
+          </View>
+        ))}
+        <Pressable
+          style={[styles.button, { backgroundColor: theme.primary }]}
+          onPress={handleNavigateToQrScanner}
+        >
+          <Text style={styles.buttonText}>Scan QR Code</Text>
+        </Pressable>
+      </ScrollView>
     </View>
   );
 }
