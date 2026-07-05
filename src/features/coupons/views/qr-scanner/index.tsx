@@ -5,26 +5,27 @@ import {
   CameraView,
   useCameraPermissions,
 } from 'expo-camera';
-import { useCallback, useEffect, useRef } from 'react';
+import { useRouter } from 'expo-router';
+import { useCallback, useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useRedeemCoupon } from '../../hooks/mutations/useRedeemCoupon';
 
 export const QrScannerView = () => {
   const theme = useTheme();
+  const router = useRouter();
   const isProcessing = useRef(false);
-  const { mutate: redeemCoupon, data } = useRedeemCoupon();
-
-  useEffect(() => {
-    console.log('Redeem coupon result:', data);
-  }, [data]);
 
   const handleBarcodeScanned = useCallback(
     (result: BarcodeScanningResult) => {
       if (isProcessing.current) return;
       isProcessing.current = true;
-      redeemCoupon({ code: result.data });
+      router.replace({
+        pathname: '/redeem-coupon-result',
+        params: {
+          code: result.data,
+        },
+      });
     },
-    [redeemCoupon],
+    [router],
   );
 
   const [permission, requestPermission] = useCameraPermissions();

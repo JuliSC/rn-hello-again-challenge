@@ -16,6 +16,10 @@ export default function RootLayout() {
             name="coupon-qr-scanner"
             options={{ title: 'Scan QR Code' }}
           />
+          <Stack.Screen
+            name="redeem-coupon-result"
+            options={{ title: 'Redeem Coupon Result' }}
+          />
         </Stack>
       </QueryClientProvider>
     </ThemeProvider>
