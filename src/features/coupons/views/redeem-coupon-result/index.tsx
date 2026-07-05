@@ -1,13 +1,13 @@
 import { useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useRedeemCoupon } from '../../hooks/mutations/useRedeemCoupon';
 
 export const RedeemCouponResultView = () => {
   const { code } = useLocalSearchParams<{
     code: string;
   }>();
-  const { mutate: redeemCoupon } = useRedeemCoupon();
+  const { mutate: redeemCoupon, data } = useRedeemCoupon();
 
   useFocusEffect(
     useCallback(() => {
@@ -15,5 +15,12 @@ export const RedeemCouponResultView = () => {
     }, [code, redeemCoupon]),
   );
 
-  return <View></View>;
+  return (
+    <View>
+      <Text>Coupon: {data?.coupon}</Text>
+      <Text>CR Points: {data?.cr_points}</Text>
+      <Text>Points: {data?.points}</Text>
+      <Text>{data?.success ? 'Success' : 'Failure'}</Text>
+    </View>
+  );
 };
