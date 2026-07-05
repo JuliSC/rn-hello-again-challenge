@@ -5,15 +5,27 @@ import {
   CameraView,
   useCameraPermissions,
 } from 'expo-camera';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRedeemCoupon } from '../../hooks/mutations/useRedeemCoupon';
 
 export const QrScannerView = () => {
   const theme = useTheme();
+  const isProcessing = useRef(false);
+  const { mutate: redeemCoupon, data } = useRedeemCoupon();
 
-  const handleBarcodeScanned = useCallback((result: BarcodeScanningResult) => {
-    console.log('Barcode scanned:', result.data);
-  }, []);
+  useEffect(() => {
+    console.log('Redeem coupon result:', data);
+  }, [data]);
+
+  const handleBarcodeScanned = useCallback(
+    (result: BarcodeScanningResult) => {
+      if (isProcessing.current) return;
+      isProcessing.current = true;
+      redeemCoupon({ code: result.data });
+    },
+    [redeemCoupon],
+  );
 
   const [permission, requestPermission] = useCameraPermissions();
 
@@ -44,7 +56,7 @@ export const QrScannerView = () => {
       }}
       onBarcodeScanned={handleBarcodeScanned}
       style={{ flex: 1 }}
-      facing="front"
+      facing="back"
     />
   );
 };
