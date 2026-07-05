@@ -6,3 +6,10 @@ export interface Bounty {
   needed_points: number;
   cr_points: number;
 }
+
+export interface RedeemBountyRequest {
+  bounty_id: string;
+}
+export interface RedeemBountyResponse {
+  bounty_id: string;
+}
