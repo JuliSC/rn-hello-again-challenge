@@ -1,8 +1,9 @@
+import { TextField } from '@/app/shared/components/text-field';
 import { BorderRadius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useLogin } from '../../hooks/mutations/useLogin';
 
 export default function LoginView() {
@@ -42,17 +43,17 @@ export default function LoginView() {
           <Text style={{ color: 'white' }}>{loginErrorMessage}</Text>
         </View>
       ) : null}
-      <TextInput
-        placeholder="Email"
-        onChangeText={(newText) => setEmail(newText)}
+      <TextField
+        onChange={(newText) => setEmail(newText)}
         defaultValue={email}
-        style={[styles.input, { borderColor: theme.border }]}
+        placeholder="Email"
+        style={styles.input}
       />
-      <TextInput
+      <TextField
         placeholder="Password"
-        onChangeText={(newText) => setPassword(newText)}
+        onChange={(newText) => setPassword(newText)}
         defaultValue={password}
-        style={[styles.input, { borderColor: theme.border }]}
+        style={styles.input}
       />
       <Pressable
         style={[styles.button, { backgroundColor: theme.primary }]}
@@ -79,8 +80,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   input: {
-    padding: Spacing.two,
-    borderWidth: 1,
     marginBottom: Spacing.three,
   },
   errorMessageContainer: {
