@@ -7,5 +7,13 @@ module.exports = defineConfig([
   eslintPluginPrettierRecommended,
   {
     ignores: ['dist/*'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+    },
   },
 ]);
