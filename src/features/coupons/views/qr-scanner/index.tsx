@@ -1,5 +1,5 @@
+import { PrimaryButton } from '@/app/shared/components/primary-button';
 import { BorderRadius, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
 import {
   BarcodeScanningResult,
   CameraView,
@@ -7,10 +7,9 @@ import {
 } from 'expo-camera';
 import { useRouter } from 'expo-router';
 import { useCallback, useRef } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export const QrScannerView = () => {
-  const theme = useTheme();
   const router = useRouter();
   const isProcessing = useRef(false);
 
@@ -40,12 +39,7 @@ export const QrScannerView = () => {
         <Text style={styles.message}>
           We need your permission to show the camera
         </Text>
-        <Pressable
-          style={[styles.button, { backgroundColor: theme.primary }]}
-          onPress={requestPermission}
-        >
-          <Text style={styles.buttonText}>Request Permission</Text>
-        </Pressable>
+        <PrimaryButton title="Request Permission" onPress={requestPermission} />
       </View>
     );
   }

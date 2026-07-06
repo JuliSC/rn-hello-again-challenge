@@ -1,9 +1,10 @@
+import { PrimaryButton } from '@/app/shared/components/primary-button';
 import { TextField } from '@/app/shared/components/text-field';
 import { BorderRadius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useLogin } from '../../hooks/mutations/useLogin';
 
 export default function LoginView() {
@@ -55,12 +56,7 @@ export default function LoginView() {
         defaultValue={password}
         style={styles.input}
       />
-      <Pressable
-        style={[styles.button, { backgroundColor: theme.primary }]}
-        onPress={handleLogin}
-      >
-        <Text style={styles.buttonText}>Login</Text>
-      </Pressable>
+      <PrimaryButton onPress={handleLogin} title={'Login'} />
     </View>
   );
 }
@@ -70,14 +66,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: Spacing.three,
-  },
-  button: {
-    padding: Spacing.four,
-    borderRadius: BorderRadius.medium,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
   },
   input: {
     marginBottom: Spacing.three,

@@ -7,13 +7,13 @@ import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import {
-  Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+import { PrimaryButton } from '../shared/components/primary-button';
 
 export default function Home() {
   const [bountyRedeemedMessage, setBountyRedeemedMessage] = useState<
@@ -121,20 +121,16 @@ export default function Home() {
             <Text>Is Redeemable: {bounty.is_redeemable ? 'Yes' : 'No'}</Text>
             <Text>Needed Points: {bounty.needed_points}</Text>
             <Text>CR Points: {bounty.cr_points}</Text>
-            <Pressable
-              style={[styles.button, { backgroundColor: theme.primary }]}
+            <PrimaryButton
+              title="Redeem"
               onPress={() => handleRedeemBounty(bounty.id)}
-            >
-              <Text style={styles.buttonText}>Redeem</Text>
-            </Pressable>
+            />
           </View>
         ))}
-        <Pressable
-          style={[styles.button, { backgroundColor: theme.primary }]}
+        <PrimaryButton
+          title="Scan QR Code"
           onPress={handleNavigateToQrScanner}
-        >
-          <Text style={styles.buttonText}>Scan QR Code</Text>
-        </Pressable>
+        />
       </ScrollView>
     </View>
   );
