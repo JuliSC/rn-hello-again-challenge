@@ -12,18 +12,36 @@ export default function LoginView() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginErrorMessage, setLoginErrorMessage] = useState<string | null>(
+    null,
+  );
 
   const handleLogin = useCallback(async () => {
     try {
       await login({ email, password });
       router.replace('/home');
-    } catch (err) {
-      console.log('Login error:', err);
+    } catch (_) {
+      setLoginErrorMessage(
+        'Incorrect email + password combination, please try again.',
+      );
+      setTimeout(() => {
+        setLoginErrorMessage(null);
+      }, 5000);
     }
   }, [email, login, password, router]);
 
   return (
     <View style={styles.container}>
+      {loginErrorMessage !== null ? (
+        <View
+          style={[
+            styles.errorMessageContainer,
+            { backgroundColor: theme.reward },
+          ]}
+        >
+          <Text style={{ color: 'white' }}>{loginErrorMessage}</Text>
+        </View>
+      ) : null}
       <TextInput
         placeholder="Email"
         onChangeText={(newText) => setEmail(newText)}
@@ -64,5 +82,13 @@ const styles = StyleSheet.create({
     padding: Spacing.two,
     borderWidth: 1,
     marginBottom: Spacing.three,
+  },
+  errorMessageContainer: {
+    position: 'absolute',
+    top: 0,
+    zIndex: 99,
+    borderRadius: BorderRadius.medium,
+    padding: Spacing.four,
+    alignSelf: 'center',
   },
 });
