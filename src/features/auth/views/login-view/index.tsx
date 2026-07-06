@@ -1,8 +1,8 @@
 import { BorderRadius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
-import { useCallback } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useLogin } from '../../hooks/mutations/useLogin';
 
 export default function LoginView() {
@@ -10,17 +10,32 @@ export default function LoginView() {
   const theme = useTheme();
   const { mutateAsync: login } = useLogin();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleLogin = useCallback(async () => {
     try {
-      await login({ email: 'testUser@dev.null', password: 'challenge-2026' });
+      await login({ email, password });
       router.replace('/home');
     } catch (err) {
       console.log('Login error:', err);
     }
-  }, [login, router]);
+  }, [email, login, password, router]);
 
   return (
     <View style={styles.container}>
+      <TextInput
+        placeholder="Email"
+        onChangeText={(newText) => setEmail(newText)}
+        defaultValue={email}
+        style={[styles.input, { borderColor: theme.border }]}
+      />
+      <TextInput
+        placeholder="Password"
+        onChangeText={(newText) => setPassword(newText)}
+        defaultValue={password}
+        style={[styles.input, { borderColor: theme.border }]}
+      />
       <Pressable
         style={[styles.button, { backgroundColor: theme.primary }]}
         onPress={handleLogin}
@@ -34,8 +49,8 @@ export default function LoginView() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: Spacing.three,
   },
   button: {
     padding: Spacing.four,
@@ -44,5 +59,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  input: {
+    padding: Spacing.two,
+    borderWidth: 1,
+    marginBottom: Spacing.three,
   },
 });
