@@ -1,5 +1,5 @@
-import { PrimaryButton } from '@/app/shared/components/primary-button';
 import { BorderRadius, Spacing } from '@/constants/theme';
+import { PrimaryButton } from '@/shared/components/primary-button';
 import {
   BarcodeScanningResult,
   CameraView,

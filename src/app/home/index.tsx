@@ -13,7 +13,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { PrimaryButton } from '../shared/components/primary-button';
+import { PrimaryButton } from '../../shared/components/primary-button';
 
 export default function Home() {
   const [bountyRedeemedMessage, setBountyRedeemedMessage] = useState<

@@ -1,7 +1,7 @@
-import { PrimaryButton } from '@/app/shared/components/primary-button';
-import { TextField } from '@/app/shared/components/text-field';
 import { BorderRadius, Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { PrimaryButton } from '@/shared/components/primary-button';
+import { TextField } from '@/shared/components/text-field';
 import { useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
